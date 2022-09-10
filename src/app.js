@@ -1,1 +1,1 @@
-const paula = "atualizado"
+const paula = "atualizados";
