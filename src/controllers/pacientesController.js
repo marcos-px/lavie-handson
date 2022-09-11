@@ -29,6 +29,7 @@ const pacientesController = {
             });
             return res.status(201).json(newPaciente);
         } catch (error) {
+            console.error(error);
             res.status(400).send("Ocorreu um erro na requisição! Contate o suporte");
             
         };
@@ -47,6 +48,7 @@ const pacientesController = {
             } else {
                 return res.status(200).json(pacienteSalvo);}
         } catch (error) {
+            console.error(error);
             return res.status(400).send("Ocorreu um erro, contate o suporte!");
             
         };
@@ -69,6 +71,7 @@ const pacientesController = {
     });
 
     const mostraPaciente = await Pacientes.findByPk(id)
+
         if (!mostraPaciente){
             return res.status(400).send("Id não encontrado!");
         } else{res.status(200).json(mostraPaciente)
@@ -76,12 +79,35 @@ const pacientesController = {
         }
         
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.status(400).json("Ocorreu um erro na requisição, contate o suporte!")
         
     }
     },
 
+        async deletaPaciente(req,res){
+            try {
+                const { id } = req.params;
+
+        const destroyPaciente = await Pacientes.findByPk(id)
+
+        if (!destroyPaciente){
+            return res.status(404).send("Id não encontrado!");
+        };
+
+        const deletaPaciente = await Pacientes.destroy({
+            where:{
+                paciente_id: id,
+            }
+        })
+            return res.status(204).json(`Paciente ${ destroyPaciente } deletado com sucesso!`)
+        
+
+            } catch (error) {
+        console.error(error);
+        return res.status(404).json("Ocorreu um erro na requisição ao deletar, contate o suporte!")
+            }
+        }
 
 };
 

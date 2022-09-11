@@ -21,6 +21,7 @@ routes.get("/pacientes", pacientesController.listarPacientes);
 routes.get("/pacientes/:id", pacientesController.listaPacienteID);
 routes.post("/pacientes", pacientesController.cadastraPaciente);
 routes.put("/pacientes/:id", pacientesController.atualizaPaciente);
+routes.delete("/pacientes/:id", pacientesController.deletaPaciente);
 
 // Rotas de dashboard
 
