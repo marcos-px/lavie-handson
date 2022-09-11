@@ -49,8 +49,40 @@ const pacientesController = {
         } catch (error) {
             return res.status(400).send("Ocorreu um erro, contate o suporte!");
             
+        };
+    },
+
+    async atualizaPaciente(req,res){
+
+    try {
+        const { id } = req.params;
+        const {nome, idade, email} = req.body;
+
+        const pacienteAtualizado = await Pacientes.update({
+            nome,
+            idade,
+            email,
+    },{
+        where:{
+            paciente_id : id
         }
+    });
+
+    const mostraPaciente = await Pacientes.findByPk(id)
+        if (!mostraPaciente){
+            return res.status(400).send("Id não encontrado!");
+        } else{res.status(200).json(mostraPaciente)
+
+        }
+        
+    } catch (error) {
+        console.log(error);
+        res.status(400).json("Ocorreu um erro na requisição, contate o suporte!")
+        
     }
+    },
+
+
 };
 
 module.exports = pacientesController;
