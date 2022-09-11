@@ -1,7 +1,7 @@
 const { Atendimentos, Pacientes, Psicologos } = require("../models");
 
 const atendimentoController = {
-    listaAtendimentos: async (req,res) => {
+    async listaAtendimentos  (req,res) {
         try {
             const findAllAtendimentos = await Atendimentos.findAll({
                 include: [{
@@ -27,7 +27,7 @@ const atendimentoController = {
                 include: [Psicologos, Pacientes]
             });
         } catch (error) {
-            res.status(404).json("Deu ruim ao buscar esse atendimento, contate o suporte!")
+            res.status(404).json("Id não encontrado")
         }
     },
 
@@ -45,10 +45,10 @@ const atendimentoController = {
                 paciente_id,
                 data_atendimento,
                 observacao,
-                psicologo_id,
+                psicologo_id: req.auth.id,
             });
 
-            res.status(200).json(cadastraAtendimento);
+            res.status(201).json(cadastraAtendimento);
         } catch (error) {
             res.status(400).json("Deu ruim, contate o suporte")
         }
