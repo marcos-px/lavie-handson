@@ -8,7 +8,7 @@ routes.get("/psicologos", psicologosController.listarPsicologos);
 
 routes.post("/psicologos",psicologosController.cadastrarPsicologo);
 
-
+routes.delete("/psicologos/:id",psicologosController.deletarPsicologo);
 
 
 
