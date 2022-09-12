@@ -1,12 +1,18 @@
 const express = require("express");
+const psicologosController = require("../controllers/psicologosController");
 
 const atendimentoController = require("../controllers/atendimentoController");
-const middlewareAuth = require("../middlewares/auth")
+const middlewareAuth = require("../middlewares/auth");
 
 const pacientesController = require("../controllers/pacientesController");
 const dashboardController = require("../controllers/dashboardController");
 
 const routes = express.Router();
+
+//Rotas de Psicólogos
+
+routes.get("/psicologos", psicologosController.listarPsicologos);
+routes.post("/psicologos", psicologosController.cadastrarPsicologo);
 
 
 // Rotas de atendimento

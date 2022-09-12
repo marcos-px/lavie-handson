@@ -14,6 +14,7 @@ const pacientesController = {
         res.status(200).json(listaDePacientes);
 
         } catch (error) {
+            console.error(error);
             res.status(400).send("Deu ruim! Chame o suporte!")
             
         }
@@ -22,6 +23,17 @@ const pacientesController = {
     async cadastraPaciente(req,res){ //aperfeiçoar
         try {
             const {nome, idade, email} = req.body;
+
+            const autenticaEmail = await Pacientes.count({
+                where:{
+                    email
+                }
+            });
+
+                if (autenticaEmail){
+                    return res.status(400).send("Email já cadastrado!")
+                }
+
             const newPaciente = await Pacientes.create({
                 nome,
                 idade,
@@ -30,7 +42,7 @@ const pacientesController = {
             return res.status(201).json(newPaciente);
         } catch (error) {
             console.error(error);
-            res.status(400).send("Ocorreu um erro na requisição! Contate o suporte");
+            res.status(404).send("Ocorreu um erro na requisição! Contate o suporte");
             
         };
     },
@@ -100,7 +112,7 @@ const pacientesController = {
                 paciente_id: id,
             }
         })
-            return res.status(204).json(`Paciente ${ destroyPaciente } deletado com sucesso!`)
+            return res.status(201).json(`Paciente ${ destroyPaciente } deletado com sucesso!`)
         
 
             } catch (error) {
