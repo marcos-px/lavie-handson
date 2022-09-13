@@ -1,3 +1,3 @@
 module.exports = {
-    key: 'GamaAcademy'
+    key: "lavie-saude-mental",
 };
