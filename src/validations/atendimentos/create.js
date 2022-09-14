@@ -1,6 +1,6 @@
-const { valida, Joi} = require("express-validation");
+const { validate, Joi} = require("express-validation");
 
-module.exports = valida({
+module.exports = validate({
     body: Joi.object({
         paciente_id: Joi.number().integer().required(),
         data_atendimento: Joi.date().required(),

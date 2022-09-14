@@ -6,11 +6,11 @@ const atendimentoController = {
             const findAllAtendimentos = await Atendimentos.findAll({
                 include: [{
                     model: Pacientes,
-                    attributes: ["NOME"]
+                    attributes: ["nome"]
                 },
                 {
                     model: Psicologos,
-                    attributes: ["NOME"]
+                    attributes: ["nome"]
                 }]
             });
             res.status(200).json(findAllAtendimentos)

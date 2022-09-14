@@ -1,33 +1,45 @@
 const express = require("express");
 const psicologosController = require("../controllers/psicologosController");
 
+const requestLog = require("../middlewares/requestLog");
+const authLoginValidation = require('../validations/auth/login');
+const loginController = require('../controllers/loginController');
 const atendimentoController = require("../controllers/atendimentoController");
+const dashboardController = require('../controllers/dashboardController');
+const validaPsicologo = require("../validations/psicologos/create");
+const validaPaciente = require("../validations/pacientes/create");
+const validaAtendimentos = require("../validations/atendimentos/create");
 const middlewareAuth = require("../middlewares/auth");
 
 const pacientesController = require("../controllers/pacientesController");
-const dashboardController = require("../controllers/dashboardController");
 
 const routes = express.Router();
+
+
+//Rota de login
+routes.post('/login', requestLog, authLoginValidation, loginController.login);
 
 //Rotas de Psicólogos
 
 routes.get("/psicologos", psicologosController.listarPsicologos);
-routes.post("/psicologos", psicologosController.cadastrarPsicologo);
-
+routes.get("/psicologo/:id",psicologosController.listaPsicologoID);
+routes.post("/psicologo",validaPsicologo,psicologosController.cadastrarPsicologo);
+routes.delete("/psicologo/:id",psicologosController.deletarPsicologo);
+routes.put("/psicologo/:id",validaPsicologo,psicologosController.atualizaPsicologo);
 
 // Rotas de atendimento
 
 routes.get("/atendimentos", atendimentoController.listaAtendimentos);
 routes.get("/atendimento/:id", atendimentoController.buscaAtendimentoEspecifico);
-routes.post("/atendimento",middlewareAuth,atendimentoController.postAtendimento);
+routes.post("/atendimento",middlewareAuth,validaAtendimentos,atendimentoController.postAtendimento);
 
 // Rotas de pacientes
 
 routes.get("/pacientes", pacientesController.listarPacientes);
-routes.get("/pacientes/:id", pacientesController.listaPacienteID);
-routes.post("/pacientes", pacientesController.cadastraPaciente);
-routes.put("/pacientes/:id", pacientesController.atualizaPaciente);
-routes.delete("/pacientes/:id", pacientesController.deletaPaciente);
+routes.get("/paciente/:id", pacientesController.listaPacienteID);
+routes.post("/paciente",validaPaciente, pacientesController.cadastraPaciente);
+routes.put("/paciente/:id",validaPaciente, pacientesController.atualizaPaciente);
+routes.delete("/paciente/:id", pacientesController.deletaPaciente);
 
 // Rotas de dashboard
 

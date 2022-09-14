@@ -14,7 +14,7 @@ const dashboardController = {
 
     async countPsicologos(req,res){
         const psicologos = await Psicologos.count()
-        res.status(200).json(`Temos ${psicologos} atendimentos cadastrados!`)
+        res.status(200).json(`Temos ${psicologos} psicólogos cadastrados no nosso sistema!`)
     },
     async mediaAtendimentos(req,res){
         const atendimentos = await Atendimentos.count()
