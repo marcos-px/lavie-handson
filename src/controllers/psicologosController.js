@@ -50,28 +50,30 @@ const psicologosController = {
   },
 
   async deletarPsicologo(req, res) {
-    try {
-      const { id } = req.params;
 
-      const destroyPsicologo = await Psicologos.findByPk(id);
+      try {
+        const { id } = req.params;
 
-      if (!destroyPsicologo) {
-        return res.status(404).send("Id não encontrado!");
-      }
+const destroyPsicologo = await Psicologos.findByPk(id)
 
-      const deletaPsicologo = await Psicologos.destroy({
-        where:{
-            psicologo_id: id,
-        }
-    })
-        return res.status(204).send("Psicólogo Deletado com sucesso!");
-      
+if (!destroyPsicologo){
+    return res.status(404).send("Id não encontrado!");
+};
+
+const deletaPsicologo = await Psicologos.destroy({
+    where:{
+        psicologo_id: id,
+    }
+})
+    return res.status(201).json("Psicólogo deletado com sucesso!")
+
 
     } catch (error) {
-      console.error(error);
-       return res.status(400).send("Ocorreu um erro na requisição ao deletar, contate o suporte!");
+console.error(error);
+return res.status(404).json("Ocorreu um erro na requisição ao deletar, contate o suporte!")
     }
-  },
+},
+
   async atualizaPsicologo(req,res){
 
     try {

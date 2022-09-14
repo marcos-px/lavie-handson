@@ -31,7 +31,7 @@ routes.put("/psicologo/:id",validaPsicologo,psicologosController.atualizaPsicolo
 
 routes.get("/atendimentos", atendimentoController.listaAtendimentos);
 routes.get("/atendimento/:id", atendimentoController.buscaAtendimentoEspecifico);
-routes.post("/atendimento",middlewareAuth,validaAtendimentos,atendimentoController.postAtendimento);
+routes.post("/atendimento",atendimentoController.postAtendimento);
 
 // Rotas de pacientes
 

@@ -4,14 +4,8 @@ const atendimentoController = {
     async listaAtendimentos  (req,res) {
         try {
             const findAllAtendimentos = await Atendimentos.findAll({
-                include: [{
-                    model: Pacientes,
-                    attributes: ["nome"]
-                },
-                {
-                    model: Psicologos,
-                    attributes: ["nome"]
-                }]
+                include: Pacientes
+                
             });
             res.status(200).json(findAllAtendimentos)
         } catch (error) {
@@ -32,8 +26,16 @@ const atendimentoController = {
     },
 
     async postAtendimento(req,res) {
+        const { paciente_id, psicologo_id, data_atendimento, observacao } = req.body;
+
         try {
-            const { paciente_id, data_atendimento, observacao } = req.body;
+            
+            const cadastraAtendimento = await Atendimentos.create({
+                paciente_id,
+                data_atendimento,
+                observacao,
+                psicologo_id,
+            });
 
             const procuraPacientePorID = await Pacientes.findByPk(paciente_id);
 
@@ -41,15 +43,17 @@ const atendimentoController = {
                 return res.status(404).json("paciente não encontrado!");
             }
 
-            const cadastraAtendimento = await Atendimentos.create({
-                paciente_id,
-                data_atendimento,
-                observacao,
-                psicologo_id: req.auth.id,
-            });
+            const procuraPsicologosPorID = await Psicologos.findByPk(paciente_id);
+
+            if(!procuraPsicologosPorID) {
+                return res.status(404).json("Psicólogo não encontrado!");
+            }
+
+           
 
             res.status(201).json(cadastraAtendimento);
         } catch (error) {
+            console.error(error);
             res.status(400).json("Deu ruim, contate o suporte")
         }
     }
