@@ -24,13 +24,13 @@ const Atendimentos = db.define(
         updateAt:{
             type: DataTypes.DATE,
         },
-        paciente_paciente_id:{
+        paciente_id:{
             type: DataTypes.INTEGER,
             references:{
                 model: Pacientes,
                 key: "paciente_id",
             },
-            psicologo_psicologo_id:{
+            psicologo_id:{
                 type: DataTypes.INTEGER,
                 references:{
                     model:Psicologos,
@@ -42,6 +42,7 @@ const Atendimentos = db.define(
     },
     {
         tableName: "atendimento",
+        timestamps: false
     }
 )
 
