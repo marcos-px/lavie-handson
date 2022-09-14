@@ -112,7 +112,9 @@ const pacientesController = {
                 paciente_id: id,
             }
         })
+
             return res.status(201).json("Paciente deletado com sucesso!")
+
         
 
             } catch (error) {

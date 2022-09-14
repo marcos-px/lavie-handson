@@ -1,5 +1,6 @@
 const express = require("express");
 const psicologosController = require("../controllers/psicologosController");
+
 const requestLog = require("../middlewares/requestLog");
 const authLoginValidation = require('../validations/auth/login');
 const loginController = require('../controllers/loginController');
@@ -9,9 +10,11 @@ const validaPsicologo = require("../validations/psicologos/create");
 const validaPaciente = require("../validations/pacientes/create");
 const validaAtendimentos = require("../validations/atendimentos/create");
 const middlewareAuth = require("../middlewares/auth");
+
 const pacientesController = require("../controllers/pacientesController");
 
 const routes = express.Router();
+
 
 //Rota de login
 routes.post('/login', requestLog, authLoginValidation, loginController.login);
