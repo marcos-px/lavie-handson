@@ -1,5 +1,5 @@
-const { when } = require("joi");
 const Psicologos = require("../models/Psicologos");
+const bcrypt = require("bcryptjs");
 
 const psicologosController = {
   async listarPsicologos(req, res) {
@@ -20,10 +20,22 @@ const psicologosController = {
   async cadastrarPsicologo(req, res) {
     try {
       const { nome, email, senha, apresentacao } = req.body;
+      const newsenha =  bcrypt.hashSync(senha, 10);
+      
+      const autenticaEmail = await Psicologos.count({
+        where:{
+            email
+        }
+    });
+
+        if (autenticaEmail){
+            return res.status(400).send("Email já cadastrado!")
+        }
+
       const novoPsicologo = await Psicologos.create({
         nome,
         email,
-        senha,
+        senha: newsenha,
         apresentacao,
       });
       if (novoPsicologo.length == 0) {
@@ -38,38 +50,40 @@ const psicologosController = {
   },
 
   async deletarPsicologo(req, res) {
-    try {
-      const { id } = req.params;
 
-      const destroyPsicologo = await Psicologos.findByPk(id);
+      try {
+        const { id } = req.params;
 
-      if (!destroyPsicologo) {
-        return res.status(404).send("Id não encontrado!");
-      }
+const destroyPsicologo = await Psicologos.findByPk(id)
 
-      const deletaPsicologo = await Psicologos.destroy({
-        where:{
-            psicologo_id: id,
-        }
-    })
-        return res.status(204).send();
-      
+if (!destroyPsicologo){
+    return res.status(404).send("Id não encontrado!");
+};
+
+const deletaPsicologo = await Psicologos.destroy({
+    where:{
+        psicologo_id: id,
+    }
+})
+    return res.status(201).json("Psicólogo deletado com sucesso!")
+
 
     } catch (error) {
-      console.error(error);
-       return res.status(400).send("Ocorreu um erro na requisição ao deletar, contate o suporte!");
+console.error(error);
+return res.status(404).json("Ocorreu um erro na requisição ao deletar, contate o suporte!")
     }
-  },
+},
+
   async atualizaPsicologo(req,res){
 
     try {
         const { id } = req.params;
         const {nome,email,senha,apresentacao} = req.body;
-
+        const newsenha =  bcrypt.hashSync(senha, 10);
         const PsicologoAtualizado = await Psicologos.update({
           nome,
           email,
-          senha,
+          senha:newsenha,
           apresentacao
     },{
         where:{

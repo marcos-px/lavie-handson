@@ -119,7 +119,7 @@ const pacientesController = {
 
             } catch (error) {
         console.error(error);
-        return res.status(404).json("Ocorreu um erro ao deletar, contate o suporte!")
+        return res.status(404).json("Ocorreu um erro na requisição ao deletar, contate o suporte!")
             }
         }
 

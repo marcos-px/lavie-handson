@@ -3,6 +3,7 @@ const Sequelize = require("sequelize");
 const DB_NAME = "lavie";
 const DB_USER = "root";
 const DB_PASS = "mysql";
+
 const DB_CONFIG = {
   dialect: "mysql",
   host: "localhost",
@@ -31,4 +32,8 @@ Object.assign(db, {
   hasConection,
 });
 
+
 module.exports = db;
+
+module.exports = db;
+
