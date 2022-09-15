@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const secret = require("../configs/secret");
 const bcrypt = require("bcryptjs");
-const Psicologo = require("../models/Psicologo");
+const Psicologo = require("../models/Psicologos");
 
 const loginController = {
     async login(req, res){

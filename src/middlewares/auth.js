@@ -1,7 +1,8 @@
-const expressJWT = require('express-jwt');
-const secret = require('../configs/secret');
+const { expressjwt } = require("express-jwt");
 
-module.exports = expressJWT({
-    secret: secret.key, 
-    algorithms: ["256"],
+const secret = require("../configs/secret");
+
+module.exports = expressjwt({
+    secret: secret.key,
+    algorithms: ["HS256"],
 });
